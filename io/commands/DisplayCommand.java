@@ -1,5 +1,7 @@
 package bg.softuni.io.commands;
 
+import bg.softuni.annotations.Alias;
+import bg.softuni.annotations.Inject;
 import bg.softuni.exceptions.InvalidInputException;
 import bg.softuni.io.IOManager;
 import bg.softuni.io.OutputWriter;
@@ -10,11 +12,19 @@ import bg.softuni.network.DownloadManager;
 import bg.softuni.repository.StudentsRepository;
 import bg.softuni.dataStructures.SimpleSortedList;
 
+import javax.naming.spi.DirectoryManager;
 import java.util.Comparator;
 
+@Alias(value = "display")
 public class DisplayCommand extends Command {
-    public DisplayCommand(String input, String[] data, Tester tester, StudentsRepository repository, DownloadManager downloadManager, IOManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+
+    @Inject
+    private StudentsRepository repository;
+
+    public DisplayCommand(
+            String input,
+            String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -30,13 +40,13 @@ public class DisplayCommand extends Command {
             Comparator<SoftUniStudent> comparator =
                     this.createStudentComparator(sortType);
             SimpleSortedList<SoftUniStudent> studentList =
-                    this.getRepository().getAllStudentsSorted(comparator);
+                    this.repository.getAllStudentsSorted(comparator);
             OutputWriter.writeMessageOnNewLine(studentList.joinWith(System.lineSeparator()));
         } else if (entityToDisplay.equalsIgnoreCase("courses")){
             Comparator<SoftUniCourse> comparator =
                     this.createCoursesComparator(sortType);
             SimpleSortedList<SoftUniCourse> list =
-                    this.getRepository().getAllCoursesSorted(comparator);
+                    this.repository.getAllCoursesSorted(comparator);
             OutputWriter.writeMessageOnNewLine(list.joinWith(System.lineSeparator()));
         } else {
             throw new InvalidInputException(this.getInput());
