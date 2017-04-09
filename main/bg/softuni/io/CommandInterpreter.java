@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 
 public class CommandInterpreter {
     private static final String COMMANDS_LOCATION = "src/main/bg/softuni/io/commands/";
+    private static final String COMMANDS_PACKAGE = "main.bg.softuni.io.commands.";
 
     private Tester tester;
     private StudentsRepository repository;
@@ -54,7 +55,7 @@ public class CommandInterpreter {
                 String className = file.getName()
                                 .substring(0,file.getName().lastIndexOf("."));
                 Class<Executable> exeClass =
-                        (Class<Executable>) Class.forName("bg.softuni.io.commands." + className);
+                        (Class<Executable>) Class.forName(COMMANDS_PACKAGE + className);
 
                 if (!exeClass.isAnnotationPresent(Alias.class)){
                     continue;

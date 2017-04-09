@@ -1,8 +1,8 @@
-package bg.softuni.models;
+package main.bg.softuni.models;
 
-import bg.softuni.contracts.Course;
-import bg.softuni.exceptions.DuplicateEntryInStructureException;
-import bg.softuni.exceptions.InvalidStringException;
+import main.bg.softuni.contracts.Course;
+import main.bg.softuni.exceptions.DuplicateEntryInStructureException;
+import main.bg.softuni.exceptions.InvalidStringException;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -46,6 +46,9 @@ public class SimpleSortedList<E extends Comparable<E>> implements SimpleOrderedB
 
     @Override
     public void add(E element) {
+        if (element == null){
+            throw new IllegalArgumentException();
+        }
         if (this.innerCollection.length <= this.size()){
             this.resize();
         }
@@ -56,6 +59,9 @@ public class SimpleSortedList<E extends Comparable<E>> implements SimpleOrderedB
 
     @Override
     public void addAll(Collection<E> elements) {
+        if (elements == null){
+            throw new IllegalArgumentException();
+        }
         if (this.size() + elements.size() >= this.innerCollection.length){
             this.multiResize(elements);
         }
@@ -85,6 +91,9 @@ public class SimpleSortedList<E extends Comparable<E>> implements SimpleOrderedB
 
     @Override
     public String joinWith(String joiner) {
+        if (joiner == null){
+            throw new IllegalArgumentException();
+        }
         StringBuilder output = new StringBuilder();
         for (E e : this) {
             output.append(e)
@@ -96,6 +105,10 @@ public class SimpleSortedList<E extends Comparable<E>> implements SimpleOrderedB
 
     @Override
     public boolean remove(E element) {
+        if (element == null){
+            throw new IllegalArgumentException();
+        }
+
         boolean isRemoved = false;
         int removedElementIndex = 0;
         for (int i = 0; i < this.size; i++) {
@@ -105,7 +118,6 @@ public class SimpleSortedList<E extends Comparable<E>> implements SimpleOrderedB
                 removedElementIndex = i;
             }
         }
-
         if (isRemoved){
             System.arraycopy(this.innerCollection,
                     removedElementIndex + 1,
@@ -113,7 +125,9 @@ public class SimpleSortedList<E extends Comparable<E>> implements SimpleOrderedB
                     removedElementIndex,
                     this.size() - removedElementIndex);
             this.innerCollection[this.size()-1] = null;
+            this.size--;
         }
+
         return isRemoved;
     }
 
